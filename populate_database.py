@@ -8,7 +8,8 @@ from get_embedding_function import get_embedding_function
 from langchain_community.vectorstores import Chroma
 
 CHROMA_PATH = "chroma"
-DATA_PATH = "data"
+DEFAULT_DATA_PATH = "data"
+DATA_PATH = os.getenv("DATA_DIR", DEFAULT_DATA_PATH)
 
 def main():
     # Check if the database should be cleared (using the --reset flag).
