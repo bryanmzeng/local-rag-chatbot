@@ -1,6 +1,18 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 
+#use aws bedrock for more accurate embeddings
+#from langchain_community.embeddings.bedrock import BedrockEmbeddings
+
+
+#def get_embedding_function():
+#    embeddings = BedrockEmbeddings(
+#        credentials_profile_name="default", region_name="us-east-1"
+#    )
+#    return embeddings
+
+#embedding function for RAG vecotrization - huggingface transformers
+
 class HuggingFaceEmbeddings:
     def __init__(self, model_name="sentence-transformers/all-MiniLM-L6-v2"):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
