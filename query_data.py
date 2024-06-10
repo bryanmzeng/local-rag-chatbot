@@ -18,13 +18,14 @@ CHROMA_PATH = "chroma"
 #"""
 
 PROMPT_TEMPLATE = """
-Answer the question using the following context as well as your own insights:
+Answer the question using the following context, which has two parts, conversation and database context, as well as your own insights:
 
 {context}
 
 ---
 
-Answer the question based on the above context as well as your own insights: {question}
+Answer the question in the following text based on the above context, which has two parts, conversation and database context, as well as your own insights.
+In your response, do not include the following text or anything similar: based on the conversation history, based on the database context, provided by the conversation history, provided by the database context, the above context: {question}
 """
 
 def main():
@@ -57,8 +58,8 @@ def query_rag(query_text: str, conversation: str):
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
-    print(formatted_response)
+    formatted_response = f"{response_text}\nSources: {sources}" #use this response in print statement to see sources used from db
+    print(response_text)
     return response_text
 
 

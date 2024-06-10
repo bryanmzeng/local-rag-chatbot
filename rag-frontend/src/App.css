@@ -28,7 +28,7 @@
   color: #61dafb;
 }
 
-/* Add this to your App.css or a similar CSS file */
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -36,8 +36,8 @@
 
 .spinner {
   animation: spin 2s linear infinite;
-  height: 20px; /* Adjust the size as needed */
-  width: 20px; /* Adjust the size as needed */
+  height: 40px;
+  width: 40px; 
   margin: auto;
   display: block;
 }
