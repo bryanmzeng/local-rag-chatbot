@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './App.css';
+
 function App() {
     const [query, setQuery] = useState('');
     const [response, setResponse] = useState('');
@@ -106,7 +108,7 @@ function App() {
             <div>
                 <h2>Response:</h2>
                 {isLoading ? (
-                    <p>Loading...</p>
+                     <img src="/logo192.png" className="spinner" alt="Loading..." />
                 ) : (
                     <pre>{response}</pre>
                 )}
