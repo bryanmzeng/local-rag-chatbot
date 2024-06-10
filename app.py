@@ -32,6 +32,7 @@ def update_database():
 def query():
     try:
         query_text = request.json['query']
+        conversation = request.json.get('conversation', [])
         env = os.environ.copy()
         env['DATA_DIR'] = data_dir
         result = subprocess.run(
@@ -41,7 +42,8 @@ def query():
             text=True,
             env=env
         )
-        return jsonify({"response": result.stdout}), 200
+        response_text = result.stdout.strip()
+        return jsonify({"response": response_text, "conversation": conversation + [{"sender": "bot", "text": response_text}]}), 200
     except subprocess.CalledProcessError as e:
         return jsonify({"error": str(e)}), 500
 

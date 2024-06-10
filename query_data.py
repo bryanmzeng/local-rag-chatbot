@@ -31,12 +31,14 @@ def main():
     # Create CLI.
     parser = argparse.ArgumentParser()
     parser.add_argument("query_text", type=str, help="The query text.")
+    parser.add_argument("--conversation", type=str, help="The conversation context.")
     args = parser.parse_args()
     query_text = args.query_text
-    query_rag(query_text)
+    conversation = args.conversation if args.conversation else ""
+    query_rag(query_text, conversation)
 
 
-def query_rag(query_text: str):
+def query_rag(query_text: str, conversation: str):
     # Prepare the DB.
     embedding_function = get_embedding_function()
     db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
@@ -45,8 +47,9 @@ def query_rag(query_text: str):
     results = db.similarity_search_with_score(query_text, k=5)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    full_context = f"Conversation history:\n{conversation}\n\n---\n\nContext from database:\n{context_text}"
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    prompt = prompt_template.format(context=context_text, question=query_text)
+    prompt = prompt_template.format(context=full_context, question=query_text)
     # print(prompt)
 
     #change llama3 for low performing model for faster query time - potentially implement dropdown to change model

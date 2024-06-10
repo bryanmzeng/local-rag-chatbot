@@ -5,6 +5,8 @@ function App() {
     const [response, setResponse] = useState('');
     const [reset, setReset] = useState(false);
     const [dataDir, setDataDir] = useState('');
+    const [conversation, setConversation] = useState([]); // State for conversation history
+    const [isLoading, setIsLoading] = useState(false); // State for loading animation
 
     const handleQueryChange = (e) => {
         setQuery(e.target.value);
@@ -15,23 +17,28 @@ function App() {
     };
 
     const handleSubmitQuery = async () => {
+        setIsLoading(true); // Start loading animation
         try {
             const res = await fetch('http://localhost:5001/query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ query })
+                body: JSON.stringify({ query, conversation }) // Send the conversation history
             });
             const data = await res.json();
-            setResponse(data.response);
+            const botResponse = data.response;
+            setResponse(botResponse);
+            setConversation(prev => [...prev, { sender: 'user', text: query }, { sender: 'llm', text: botResponse }]);
         } catch (error) {
             console.error(error);
             setResponse('Error querying the database.');
         }
+        setIsLoading(false); // Stop loading animation
     };
 
     const handleUpdateDatabase = async () => {
+        setIsLoading(true); // Start loading animation
         try {
             const res = await fetch('http://localhost:5001/update-database', {
                 method: 'POST',
@@ -46,9 +53,11 @@ function App() {
             console.error(error);
             setResponse('Error updating the database.');
         }
+        setIsLoading(false); // Stop loading animation
     };
 
     const handleSetDataDir = async () => {
+        setIsLoading(true); // Start loading animation
         try {
             const res = await fetch('http://localhost:5001/set-data-dir', {
                 method: 'POST',
@@ -63,6 +72,7 @@ function App() {
             console.error(error);
             setResponse('Error setting data directory.');
         }
+        setIsLoading(false); // Stop loading animation
     };
 
     return (
@@ -94,8 +104,20 @@ function App() {
                 <button onClick={handleUpdateDatabase}>Update Database</button>
             </div>
             <div>
-                <h2>Llama3:</h2>
-                <pre>{response}</pre>
+                <h2>Response:</h2>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <pre>{response}</pre>
+                )}
+            </div>
+            <div>
+                <h2>Conversation History:</h2>
+                {conversation.map((msg, index) => (
+                    <div key={index} className={msg.sender === 'user' ? 'user-message' : 'bot-message'}>
+                        <strong>{msg.sender}:</strong> {msg.text}
+                    </div>
+                ))}
             </div>
         </div>
     );
