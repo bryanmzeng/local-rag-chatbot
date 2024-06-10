@@ -24,8 +24,7 @@ Answer the question using the following context, which has two parts, conversati
 
 ---
 
-Answer the question in the following text based on the above context, which has two parts, conversation and database context, as well as your own insights.
-In your response, do not include the following text or anything similar: based on the conversation history, based on the database context, provided by the conversation history, provided by the database context, the above context: {question}
+Answer the following question based on the above context and your own knowledge: {question}
 """
 
 def main():
