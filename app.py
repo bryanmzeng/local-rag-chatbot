@@ -32,11 +32,16 @@ def update_database():
 def query():
     try:
         query_text = request.json['query']
-        conversation = request.json.get('conversation', [])
+        conversation = (request.json.get('conversation', []))
+        convo_string = "\n".join([f"{msg['sender']}: {msg['text']}" for msg in conversation])
         env = os.environ.copy()
         env['DATA_DIR'] = data_dir
+        args = ["python3", "query_data.py", query_text]
+        if conversation != "":
+            args.extend(["--conversation", convo_string])
+
         result = subprocess.run(
-            ["python3", "query_data.py", query_text],
+            args,
             check=True,
             capture_output=True,
             text=True,

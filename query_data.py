@@ -47,7 +47,7 @@ def query_rag(query_text: str, conversation: str):
     results = db.similarity_search_with_score(query_text, k=5)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
-    full_context = f"Conversation history:\n{conversation}\n\n---\n\nContext from database:\n{context_text}"
+    full_context = f"Context of Conversation history:\n{conversation}\n\n---\n\nContext from database:\n{context_text}"
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=full_context, question=query_text)
     # print(prompt)
