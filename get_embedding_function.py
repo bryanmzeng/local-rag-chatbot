@@ -1,5 +1,58 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
+import boto3
+import json
+
+'''bedrock = boto3.client(
+   service_name = 'bedrock-runtime',
+   region_name = 'us-east-1'
+)
+prompt = "dc is the capital of US"
+body = json.dumps({
+    "inputText": prompt,
+})
+
+model_id = "amazon.titan-embed-text-v2:0"
+accept = "application/json"
+content_type = "application/json"
+
+response = bedrock.invoke_model(
+    body = body,
+    modelId = model_id,
+    accept = accept,
+    contentType = content_type,
+)
+
+response_body = json.loads(response['body'].read())
+embedding = response_body.get('embedding')
+print(embedding)'''
+
+class BedrockEmbeddings:
+    def __init__(self, model_id="amazon.titan-embed-text-v2:0", region_name="us-east-1"):
+        self.model_id = model_id
+        self.bedrock = boto3.client('bedrock-runtime', region_name=region_name)
+
+    def embed_text(self, text):
+        body = json.dumps({"inputText": text})
+        response = self.bedrock.invoke_model(
+            body=body,
+            modelId=self.model_id,
+            accept="application/json",
+            contentType="application/json"
+        )
+        response_body = json.loads(response['body'].read())
+        embedding = response_body.get('embedding')
+        return embedding
+
+    def embed_query(self, query):
+        return self.embed_text(query)
+
+    def embed_documents(self, texts):
+        embeddings = []
+        for text in texts:
+            embedding = self.embed_text(text)
+            embeddings.append(embedding)
+        return embeddings
 
 #use aws bedrock for more accurate embeddings
 #from langchain_community.embeddings.bedrock import BedrockEmbeddings
@@ -40,4 +93,4 @@ class HuggingFaceEmbeddings:
 
 
 def get_embedding_function():
-    return HuggingFaceEmbeddings()
+    return BedrockEmbeddings()
