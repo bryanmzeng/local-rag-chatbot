@@ -10,6 +10,7 @@ from langchain_community.vectorstores import Chroma
 CHROMA_PATH = "chroma"
 DEFAULT_DATA_PATH = "data"
 DATA_PATH = os.getenv("DATA_DIR", DEFAULT_DATA_PATH)
+DEFAULT_DATA_PATH = DATA_PATH
 
 def main():
     # Check if the database should be cleared (using the --reset flag).
