@@ -40,6 +40,7 @@ pip install torch
 #### Now to set up CLI, navigate to IAM. On the left hand panel, navigate to users. Choose the desired user, and create an access key, or use an existing one.
 #### Navigate to the project terminal (ex. bryanzeng@Bryans-MacBook-Pro-2 local-rag-chatbot % ), and run the following:
 ```
+pip install boto3
 pip install awscli
 aws configure
 ```
