@@ -14,11 +14,12 @@ npm install
 
 ## Directions to setup chatbot:
 ### navigate back to local-rag-chatbot (ex. bryanzeng@Bryans-MacBook-Pro-2 local-rag-chatbot % )
-### Setup langchain, Chroma, pyPDF:
+### Setup langchain, Chroma, pyPDF, flask:
 ```
 pip install langchain
 pip install chroma
 pip install pypdf
+pip install flask
 ```
 ### For the embedding function, choose either AWS Bedrock (default) or Huggingface. 
 #### In get_embedding_function.py:
