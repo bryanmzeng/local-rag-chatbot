@@ -6,6 +6,7 @@
 
 ## Directions to run:
 ### For embedding_function.py, choose either AWS Bedrock or Huggingface. 
+#### For running Huggingface, run pip install transformers
 #### If using AWS Bedrock, first pip install awscli and run aws configure to set up AWS CLI.
 
 ## To run llama3 locally
