@@ -1,9 +1,10 @@
-llama 3 for llm, huggingface transformer/aws titan text embedding v2 for embedding
+#Fully functional chatbot with RAG vector search of set local directory.
+##llama 3 for llm, huggingface transformer/aws titan text embedding v2 for embedding
 
-Fully functional chatbot with RAG vector search of set local directory.
 
 
-Directions to run: \n
+
+Directions to run:
 For embedding_function.py, choose either AWS Bedrock or Huggingface. If using AWS Bedrock, first pip install awscli and run aws configure to set up AWS CLI.
 
 To run llama3 locally
