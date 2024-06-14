@@ -5,6 +5,12 @@
 
 
 ## Directions to run:
+### Setup langchain, Chroma, pyPDF:
+```
+pip install langchain
+pip install chroma
+pip install pypdf
+```
 ### For embedding_function.py, choose either AWS Bedrock or Huggingface. 
 #### For running Huggingface, run pip install transformers
 #### If using AWS Bedrock, first pip install awscli and run aws configure to set up AWS CLI.
