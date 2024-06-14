@@ -1,7 +1,9 @@
 # Fully functional chatbot with RAG vector search of set local directory.
 ## llama 3 for llm, huggingface transformer/aws titan text embedding v2 for embedding
 
-
+## Initial setup:
+### Install python3: https://www.python.org/downloads/
+### Install Node.js: https://nodejs.org/en/download/package-manager
 
 
 ## Directions to run:
@@ -18,9 +20,15 @@ pip install pypdf
 ## To run llama3 locally
 ### Download Ollama: https://ollama.com/
 ### Run in terminal: ollama run llama3
-#### Feel free to change the model in query_data.py, simply run the model in terminal for ollama (ex. for mistral: ollama run mistral)
+#### Feel free to change the model in query_data.py, simply run the model in terminal for ollama (ex. for mistral: ollama run mistral). Browse additional models here: https://ollama.com/library
+#### In query_data.py, the query_rag function:
+```
+model = Ollama(model="llama3") #feel free to change this model
+response_text = model.invoke(prompt)
+```
+##### Note: Consider that the LLM is running locally, high performing models might take more time to run depending on the performance of your computer/workstation.
 
-## Start flask server by running app.py, then cd rag_frontend and npm start.
+## Start flask server by running app.py, then cd rag-frontend and `npm` start.
 
 ## How to Use:
 ### Data directory: set data directory upon first launch, will be saved as default upon further launches, update directory as needed.
